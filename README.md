@@ -1,6 +1,6 @@
 # JavaScript Tasks
 
-This repo contains solutions for JavaScript course exercices.
+This repo contains solutions for JavaScript course exercises.
 
 ## Completed Tasks
 - **week_01**
