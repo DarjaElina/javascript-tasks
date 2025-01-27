@@ -1,6 +1,6 @@
 # JavaScript Tasks
 
-This repo contains solutions for JavaScript course exercices at Business College Helsinki.
+This repo contains solutions for JavaScript course exercices.
 
 ## Completed Tasks
 - **week_01**
@@ -14,3 +14,5 @@ This repo contains solutions for JavaScript course exercices at Business College
     - [x] conditions
 - **week_03:**
     - [x] github
+    - [ ] loops
+    - [ ] 8_ball
