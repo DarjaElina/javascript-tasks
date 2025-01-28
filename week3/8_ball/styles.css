@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('images/stars.jpg');
+    box-sizing: border-box;
+    color: white;
+}
+
+.user-input {
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+    margin-top: 100px;
+    min-height: 30px;
+}
+
+.header {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.btn {
+    background-color: white;
+    border: none;
+    color: midnightblue;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+}
