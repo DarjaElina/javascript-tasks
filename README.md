@@ -14,5 +14,5 @@ This repo contains solutions for JavaScript course exercises.
     - [x] conditions
 - **week_03:**
     - [x] github
-    - [ ] loops
+    - [x] loops
     - [x] 8_ball
