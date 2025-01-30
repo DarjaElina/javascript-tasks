@@ -10,6 +10,6 @@ const validatePassword = () => {
     while (pass !== 'correct123') {
         pass = prompt('try again');
     }
-}
-
+    alert('Access granted')
+};
 validatePassword();
