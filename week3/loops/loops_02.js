@@ -4,25 +4,25 @@ Write a function named logEvenNumbers:
 Display all numbers in a single line in the console.; 
 */
 
-const logEvenNumbers = () => {
-    let i = 2;
-    let j = 98;
-    while (i < 100) {
-        if (i % 2 === 0) {
-            console.log(i)
-        }
-        while (j >= 0) {
-            if (i % 2 === 0) {
-                console.log(j)
-            }
-            j--;
-            break;
-        }
-        i++;
-    }
-};
+// const logEvenNumbers2 = () => {
+//     let i = 2;
+//     let j = 98;
+//     while (i < 100) {
+//         if (i % 2 === 0) {
+//             console.log(i)
+//         }
+//         while (j >= 0) {
+//             if (i % 2 === 0) {
+//                 console.log(j)
+//             }
+//             j--;
+//             break;
+//         }
+//         i++;
+//     }
+// };
 
-const logEvenNumbers2 = () => {
+const logEvenNumbers = () => {
     for (let i = 2; i < 100; i++) {
         if (i % 2 === 0) {
             console.log(i, 100 - i)
@@ -31,14 +31,6 @@ const logEvenNumbers2 = () => {
     }
 }
 
-for (let i = 1; i <= 5; i++) {
-    console.log(i);
-}
-let j = 1;
-while (j <= 5) {
-    console.log(j);
-    j++;
-}
 
-//logEvenNumbers();
-logEvenNumbers2();
+//logEvenNumbers2();
+logEvenNumbers();
