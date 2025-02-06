@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>ATM simulator</title>
+</head>
+<body>
+    <section>
+        <div class="wrapper">
+            <h2>Balance</h3>
+            <p id="balance_text" class="hidden">Your current balance is: <span id="balance"></span></p>
+            <button id="balance_btn">Show balance</button>
+        </div>
+        <div class="wrapper">
+            <input id="deposit_input" type="number" placeholder="Deposit money">
+            <button id="deposit_btn">Deposit</button>
+        </div>
+
+        <div class="wrapper">
+            <input id="withdraw_input" type="number" placeholder="Withdraw money">
+            <button id="withdraw_btn">Withdraw</button>
+        </div>
+        <p id="user_message"></p>
+    </section>
+    <script src="main.js"></script>
+</body>
+</html>
