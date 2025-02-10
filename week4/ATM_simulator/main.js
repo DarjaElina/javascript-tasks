@@ -10,8 +10,6 @@ const userMessage = document.querySelector('#user_message');
 let currentBalance = 1000;
 balanceSpan.innerText = `${currentBalance.toFixed(2)} $`;
 
-
-
 const checkBalance = () => {
     balanceText.classList.toggle('hidden');
     balanceBtn.textContent = balanceText.classList.contains('hidden') ? 'Show balance' : 'Hide balance';
@@ -44,11 +42,10 @@ const withdraw = () => {
         showMessage('Insufficient balance', true);
         return;
     }
-        currentBalance -= amount;
-        balanceSpan.innerText = `${currentBalance.toFixed(2)} $`;
-        showMessage('Withdrawal successful');
-        withdrawInput.value = '';
-    
+    currentBalance -= amount;
+    balanceSpan.innerText = `${currentBalance.toFixed(2)} $`;
+    showMessage('Withdrawal successful');
+    withdrawInput.value = '';
 }
 
 
