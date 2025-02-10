@@ -1,26 +1,35 @@
 const type = document.querySelector('#type');
 const toppings = document.querySelectorAll('.topping');
 const extras = document.querySelectorAll('.extra');
-const total = document.querySelector('#totalPriceDisplay');
+const totalPriceDisplay = document.querySelector('#totalPriceDisplay');
+const totalPriceSpan = document.querySelector('#totalPrice');
 
 let totalPrice = +type.value;
-total.innerText = `${totalPrice} $`;
+let toppingsTotal = 0;
+totalPriceDisplay.textContent = `${totalPrice} €`;
+totalPriceSpan.textContent = `${totalPrice} €`;
+
+const updateUI = (price) => {
+    totalPriceDisplay.textContent = `${price} €`;
+    totalPriceSpan.textContent = `${price} €`;
+}
 
 const getType = (e) => {
-    total.innerText = `${e.target.value} $`;
-    totalPrice = +e.target.value;
+    let amount = +e.target.value;
+    totalPrice = amount + toppingsTotal;
+    updateUI(totalPrice);
 }
 
 const getToppingOrExtra = (e) => {
+    let amount = +e.target.value;
     if (e.target.checked) {
-        total.innerText = `${totalPrice + +e.target.value} $`;
-        totalPrice += +e.target.value;
-        
+        totalPrice += amount
+        toppingsTotal += amount;
     } else {
-        total.innerText = `${totalPrice - +e.target.value} $`;
-        totalPrice -= +e.target.value;
-        
+        totalPrice -= amount;
+        toppingsTotal -= amount;
     }
+    updateUI(totalPrice);
 }
 
 type.addEventListener('change', getType);
