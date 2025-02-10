@@ -12,6 +12,16 @@ totalPriceSpan.textContent = `${totalPrice} €`;
 const updateUI = (price) => {
     totalPriceDisplay.textContent = `${price} €`;
     totalPriceSpan.textContent = `${price} €`;
+    document.querySelector(".price-banner").animate(
+        [
+          { transform: 'transform: scale(1)', backgroundColor: '#C9184A' },
+          { transform: 'scale(1.1)', backgroundColor: '#FF758F'},
+          { transform: 'transform: scale(1)', backgroundColor: '#C9184A' }
+        ], {
+          duration: 3000,
+          iterations: 1
+        }
+      );
 }
 
 const getType = (e) => {
