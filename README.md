@@ -16,3 +16,7 @@ This repo contains solutions for JavaScript course exercises.
     - [x] github
     - [x] loops
     - [x] 8_ball
+- **week_04:**
+    - [x] basic_DOM
+    - [x] ATM_simulator
+    - [x] pancake_maker
