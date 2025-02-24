@@ -20,3 +20,6 @@ This repo contains solutions for JavaScript course exercises.
     - [x] basic_DOM
     - [x] ATM_simulator
     - [x] pancake_maker
+- **week_05:**
+    - [x] arrays
+    - [x] pancake_maker2
