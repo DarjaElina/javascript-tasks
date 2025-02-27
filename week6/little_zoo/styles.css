@@ -52,17 +52,13 @@ body {
   #animalList {
     list-style-type: none;
     padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   
   #animalList li {
-    background: #fff;
-    margin: 8px 0;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    width: 15em;
   }
   
   .remove-btn {
@@ -82,4 +78,14 @@ body {
     margin-top: 20px;
     padding-top: 15px;
     border-top: 2px solid #ddd;
+  }
+
+  #animalList li div {
+    height: 15em;
+    background-color: pink;
+    margin: 1em;
+    padding: 1em;
+    display: flex;
+    align-items: center;
+    border-radius: 1.5em;
   }
