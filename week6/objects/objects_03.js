@@ -116,6 +116,22 @@ Add a button in HTML that, when clicked, adds a new `Task` object to a `tasks` a
 */
 
 const tasks = [];
+const taskList = document.querySelector('#taskList');
+
+const displayTasks = () => {
+    taskList.innerHTML = '';
+    tasks.forEach(task => {
+        const taskItem = document.createElement('li');
+        const taskTitle = document.createElement('p');
+        const taskDescription = document.createElement('p');
+        const isTaskCompleted = document.createElement('p');
+        taskList.appendChild(taskItem);
+        taskItem.append(taskTitle, taskDescription, isTaskCompleted)
+        taskTitle.textContent = `Title: ${task.title}`;
+        taskDescription.textContent = `Description: ${task.description}`;
+        isTaskCompleted.textContent = task.completed;
+    })
+}
 
 class Task {
     constructor(title, description, completed) {
@@ -126,11 +142,18 @@ class Task {
 }
 
 const addTaskBtn = document.querySelector('#addTask');
+
 addTaskBtn.addEventListener('click', () => {
-    const title = document.querySelector('#taskTitle');
-    const description = document.querySelector('#taskDescription');
-    const isCompleted = document.querySelector('#isCompleted');
-    const task = new Task(title, description,)
+    const title = document.querySelector('#taskTitle').value;
+    const description = document.querySelector('#taskDescription').value;
+    const isCompleted = document.querySelector('#isCompleted').checked ? 'Task completed' : 'Task not completed';
+    if (!title || !description) {
+        alert('Please enter task info');
+        return;
+    }
+    const task = new Task(title, description, isCompleted);
+    tasks.push(task);
+    displayTasks();
 })
 
 /* Task 7
@@ -139,7 +162,54 @@ Use `fetch` to get weather data from an API and display it in an HTML element.
 (API: OpenWeather or any free weather API)
 */
 
-// Your code here
+const weatherBtn = document.querySelector('#weatherBtn');
+import { API_KEY } from "./config.js";
+
+const weatherApp = {
+    async fetchWeather(city) {
+        const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+}
+
+
+
+
+const cityName = document.querySelector('#cityName');
+
+weatherBtn.addEventListener('click', async () => {
+    if (!cityName.value) {
+        document.querySelector('#weatherError').textContent = 'Please enter city name';
+        return;
+    }
+
+    try {
+        const weatherData = await weatherApp.fetchWeather(cityName.value);
+        if (!weatherData || weatherData.code === '404') {
+            throw new Error('City not found');
+        }
+
+        document.querySelector('#temperature').textContent = `${(weatherData.main.temp - 273.15).toFixed()}°`;
+        document.querySelector('#feelsLike').textContent = `${(weatherData.main.feels_like - 273.15).toFixed()}°`;
+        document.querySelector('#weatherDescription').textContent = weatherData.weather[0].main;
+        document.querySelector('#weatherIcon').setAttribute('src', `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`);
+        document.querySelector('#weatherError').textContent = '';
+        cityName.value = '';
+
+    } catch (error) {
+        document.querySelector('#weatherError').textContent = error.message;
+    }
+});
 
 /* Task 8
 Create a constructor function `Car` that takes `brand`, `model`, and `year`.
@@ -147,28 +217,171 @@ In the constructor, add a method `age()` that calculates the car’s age.
 Instantiate a new `Car` and display its age on the webpage.
 */
 
-// Your code here
+class Car {
+    constructor(brand, model, year) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+    }
+
+    age() {
+        let currentYear = new Date().getFullYear();
+        return currentYear - this.year;
+    }
+}
+
+
+document.querySelector('#carAgeBtn').addEventListener('click', () => {
+    const year = document.querySelector('#carYear').value;
+    if (!year || parseFloat(year) < 1886 || parseFloat(year) > new Date().getFullYear())  {
+        document.querySelector('#carError').textContent = 'Please enter valid year';
+        return;
+    }
+    const car = new Car('default', 'default', year);
+    const age = car.age();
+    document.querySelector('#carAge').textContent = `Your car is ${age} years old`;
+    document.querySelector('#carError').textContent = '';
+    document.querySelector('#carYear').value = '';
+})
+
 
 /* Task 9
 Create an array `users` where each user has `name` and `score`.
 Add a button in HTML that sorts the users by score in descending order and updates the displayed list.
 */
 
-// Your code here
+const users = [
+    {
+        name: 'Alice',
+        score: 56
+    },
+    {
+        name: 'Ronald',
+        score: 90
+    },
+    {
+        name: 'Jane',
+        score: 89
+    },
+    {
+        name: 'Max',
+        score: 40
+    },
+    {
+        name: 'Harry',
+        score: 100
+    },
+]
+
+const userList = document.querySelector('#userList');
+
+const displayUsers = () => {
+    userList.innerHTML = '';
+    users.forEach(user => {
+        const userItem = document.createElement('li');
+        userList.appendChild(userItem);
+        userItem.textContent = `User: ${user.name}, score: ${user.score}`;
+    })
+}
+
+displayUsers();
+
+document.querySelector('#sortUsers').addEventListener('click', () => {
+    users.sort((u1, u2) => u1.score - u2.score);
+    displayUsers();
+})
+
 
 /* Task 10
 Create an object `shoppingList` with an array `items`.
 Add an input field and button to allow users to add new items to `items` and display the updated list.
 */
 
-// Your code here
+const shoppingList = {
+    items: []
+}
+
+const shoppingListUl = document.querySelector('#shoppingList');
+
+const displayShoppingItems = () => {
+    shoppingListUl.innerHTML = '';
+    shoppingList.items.forEach(item => {
+        const shoppingItem = document.createElement('li');
+        shoppingListUl.appendChild(shoppingItem);
+        shoppingItem.textContent = item;
+    })
+}
+
+displayShoppingItems();
+
+document.querySelector('#shoppingListBtn').addEventListener('click', () => {
+    const newItem = document.querySelector('#itemName').value;
+    if (!newItem) {
+        document.querySelector('#shoppingListError').textContent = "Please enter item's name";
+        return;
+    }
+    shoppingList.items.push(newItem);
+    displayShoppingItems();
+    document.querySelector('#itemName').value = '';
+    document.querySelector('#shoppingListError').textContent = '';
+})
 
 /* Task 11
 Create an array of `posts` where each post has `title`, `content`, and `likes`.
 Add a "Like" button next to each post that increases the `likes` count and updates the display.
 */
 
-// Your code here
+const posts = [
+    {
+        title: 'Solving JavaScript tasks',
+        content: 'Solving JS task is cool and interesting!',
+        likes: 10
+    },
+    {
+        title: 'Learning React',
+        content: 'Learning React is fun!',
+        likes: 20
+    },
+    {
+        title: 'Practicing PHP',
+        content: 'Practicing PHP takes a lof of effort!',
+        likes: 30
+    },
+    {
+        title: 'Mastering Java',
+        content: 'Mastering Java is unforgettable experience!',
+        likes: 40
+    },
+]
+
+const postsList = document.querySelector('#posts');
+
+const displayPosts = () => {
+    postsList.innerHTML = '';
+    posts.forEach((post, index) => {
+        const postItem = document.createElement('li');
+        const postTitle = document.createElement('p');
+        const postContent = document.createElement('p');
+        const postLikes = document.createElement('p');
+        const likeBtn = document.createElement('button');
+
+        likeBtn.textContent = "Like";
+        
+        likeBtn.addEventListener('click', () => {
+            posts[index].likes++; 
+            displayPosts();
+        });
+
+        postItem.append(postTitle, postContent, postLikes, likeBtn);
+        postsList.appendChild(postItem);
+
+        postTitle.textContent = `Title: ${post.title}`;
+        postContent.textContent = `Content: ${post.content}`;
+        postLikes.textContent = `Likes: ${post.likes}`;
+    })
+}
+
+displayPosts();
 
 /* Task 12
 Create a constructor function `Employee` with `name`, `position`, and `salary`.

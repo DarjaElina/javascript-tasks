@@ -3,38 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>Document</title>
 </head>
 <body>
-    <div>
-        <p>Theme</p>
+    <div class="container">
+        <h2>Theme</h2>
         <button id="toggleTheme">Toggle theme</button>
         <p id="currentTheme"></p>
     </div>
-    <div>
-        <p>Counter</p>
+    <div class="container">
+        <h2>Counter</h2>
         <button id="incrementBtn">Increase</button>
         <button id="decrementBtn">Descrease</button>
         <p>Counter value is: <span id="displayCounter"></p> </p>
         
     </div>
-    <div>
-        <p>Product</p>
-        <input type="text" placeholder="Enter a quantity" id="quantityInput">
+    <div class="container">
+        <h2>Product</h2>
+        <input type="number" placeholder="Enter a quantity" id="quantityInput">
         <button id="calculateTotal">Calculate total</button>
         <p>Total price is: <span id="displayPrice"></span></p>
     </div>
-    <div>
-        <p>Task</p>
+    <div class="container">
+        <h2>Task</h2>
         <p>Tasks are now:</p>
-        <div>
+        <ul id="taskList"></ul>
+        <div class="form">
             <input id="taskTitle" type="text" placeholder="Title">
             <input id="taskDescription" type="text" placeholder="Description">
-            <label for="isCompleted">Task completed</label>
-            <input id="isCompleted" type="checkbox">
+            <div>
+                <label for="isCompleted">Task completed</label>
+                <input id="isCompleted" type="checkbox">
+            </div>
+            <button id="addTask">Add task</button>
         </div>
-        <button id="addTask">Add task</button>
     </div>
-    <script src="objects_03.js"></script>
+    <div class="container">
+        <p id="weatherError"></p>
+        <div class="form">
+            <h2>Weather API</h2>
+            <p>Weather: <span id="weatherDescription"></span></p>
+            <div id="weatherIconContainer">
+                <img id="weatherIcon" src="" alt="">
+            </div>
+            <p>Temperature: <span id="temperature"></span></p>
+            <p>Feels like: <span id="feelsLike"></span></p>
+            <p></p>
+            <input id="cityName" type="text" placeholder="Enter city name">
+            <button id="weatherBtn">Get weather data</button>
+        </div>
+    </div>
+    <div class="container">
+        <h2>How old is the car</h2>
+        <p id="carError"></p>
+        <div class="form">
+            <p id="carAge"></p>
+            <input id="carYear" type="number" placeholder="Enter year when your car was made">
+            <button id="carAgeBtn">Calculate age</button>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Users' scores</h2>
+        <div class="form">
+            <ul id="userList"></ul>
+            <button id="sortUsers">Sort by score</button>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Shopping List</h2>
+        <p id="shoppingListError"></p>
+        <ul id="shoppingList"></ul>
+        <div class="form">
+            <input id="itemName" type="text" placeholder="Enter item name">
+            <button id="shoppingListBtn">Add item</button>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Posts</h2>
+        <ul id="posts"></ul>
+    </div>
+    <script type="module" src="objects_03.js"></script>
 </body>
 </html>
