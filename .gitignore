@@ -9,3 +9,5 @@ node_modules/
 
 # Visual Studio Code settings
 .vscode/
+
+week6/objects/config.js
