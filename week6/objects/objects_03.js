@@ -92,11 +92,13 @@ Update the `quantity` property and display the total price dynamically.
 const product = {
     name: 'Apple',
     price: 2,
-    quantity: 10
+    quantity: 0
 }
 
 const quantityInput = document.querySelector('#quantityInput');
 const displayPrice = document.querySelector('#displayPrice');
+document.querySelector('#productName').textContent = product.name;
+document.querySelector('#productPrice').textContent = product.price;
 const calculateTotalBtn = document.querySelector('#calculateTotal');
 displayPrice.textContent = product.price * product.quantity;
 
@@ -107,6 +109,7 @@ calculateTotalBtn.addEventListener('click', () => {
     }
     product.quantity = parseFloat(quantityInput.value);
     displayPrice.textContent = product.price * product.quantity;
+    document.querySelector('#quantityInput').value = '';
 })
 
 
@@ -153,6 +156,9 @@ addTaskBtn.addEventListener('click', () => {
     }
     const task = new Task(title, description, isCompleted);
     tasks.push(task);
+    document.querySelector('#taskTitle').value = '';
+    document.querySelector('#taskDescription').value = '';
+    document.querySelector('#isCompleted').checked = false;
     displayTasks();
 })
 
@@ -233,7 +239,7 @@ class Car {
 
 document.querySelector('#carAgeBtn').addEventListener('click', () => {
     const year = document.querySelector('#carYear').value;
-    if (!year || parseFloat(year) < 1886 || parseFloat(year) > new Date().getFullYear())  {
+    if (!year || parseFloat(year) < 1886 || parseFloat(year) > new Date().getFullYear() || !Number.isInteger(parseFloat(year)))  {
         document.querySelector('#carError').textContent = 'Please enter valid year';
         return;
     }
@@ -287,7 +293,7 @@ const displayUsers = () => {
 displayUsers();
 
 document.querySelector('#sortUsers').addEventListener('click', () => {
-    users.sort((u1, u2) => u1.score - u2.score);
+    users.sort((u1, u2) => u2.score - u1.score);
     displayUsers();
 })
 
@@ -389,21 +395,112 @@ Add a method `increaseSalary(percent)` that increases the salary by a given perc
 Create an employee and increase their salary dynamically.
 */
 
-// Your code here
+class Employee {
+    constructor(name, position, salary) {
+        this.name = name;
+        this.position = position;
+        this.salary = salary;
+    }
+    increaseSalary(percent) {
+        this.salary = this.salary + this.salary / 100 * percent;
+    }
+}
 
+const employee = new Employee('John', 'Full stack developer', 2000);
+const displayEmployee = () => {
+    document.querySelector('#employeeName').textContent = employee.name;
+    document.querySelector('#employeePosition').textContent = employee.position;
+    document.querySelector('#employeeSalary').textContent = employee.salary;
+}
+displayEmployee();
+document.querySelector('#increaseSalaryBtn').addEventListener('click', () => {
+    const percent = parseFloat(document.querySelector('#percentInput').value);
+    if (!percent || percent < 0) {
+        document.querySelector('#employeeError').textContent = 'Please enter valid number';
+        return;
+    }
+    employee.increaseSalary(percent.toFixed());
+    document.querySelector('#percentInput').value = '';
+    document.querySelector('#employeeError').textContent = '';
+    displayEmployee();
+})
 /* Task 13
 Create an object `timer` with `seconds` and a method `start()` that counts seconds up.
 Display the timer in an HTML element and update it every second.
 */
 
-// Your code here
+const timer = {
+    seconds: 0,
+    start() {
+        this.seconds++;
+    }
+}
+
+const displayTimer = () => {
+    document.querySelector('#timer').textContent = timer.seconds;
+}
+
+displayTimer();
+
+// Uncomment if you'd like to test it :)
+// setInterval(() => {
+//     timer.start();
+//     displayTimer()
+// }, 1000);
+
+
 
 /* Task 14
 Create a constructor function `Book` that takes `title`, `author`, and `pages`.
 Create a simple book library that allows users to add books via an HTML form and displays them dynamically.
 */
 
-// Your code here
+const books = [];
+const bookList = document.querySelector('#bookList');
+
+class Book {
+    constructor(title, author, pages) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+    }
+}
+
+const displayBooks = () => {
+    bookList.innerHTML = '';
+    books.forEach(b => {
+        const bookItem = document.createElement('li');
+        const bookTitle = document.createElement('p');
+        const bookAuthor = document.createElement('p');
+        const pageAmount = document.createElement('p');
+        bookTitle.textContent = `Book title: ${b.title}`;
+        bookAuthor.textContent = `Book author: ${b.author}`;
+        pageAmount.textContent = `Pages in book: ${b.pages}`;
+        bookItem.append(bookTitle, bookAuthor, pageAmount);
+        bookList.appendChild(bookItem);
+    })
+}
+
+displayBooks();
+
+document.querySelector('#addBookBtn').addEventListener('click', () => {
+    const title = document.querySelector('#bookTitle').value;
+    const author = document.querySelector('#bookAuthor').value;
+    const pages = document.querySelector('#pageAmount').value;
+
+    if (!title || !author || !pages) {
+        document.querySelector('#libraryError').textContent = 'Invalid values';
+        return;
+    }
+
+    const book = new Book(title, author, pages);
+    books.push(book);
+    document.querySelector('#libraryError').textContent = '';
+    document.querySelector('#bookTitle').value = '';
+    document.querySelector('#bookAuthor').value = '';
+    document.querySelector('#pageAmount').value = '';
+    displayBooks();
+})
 
 /* Task 15
 Create an object `foxTracker` with a `foxes` array.
@@ -411,4 +508,41 @@ Add an input field and button that allows users to add new foxes (with name and 
 Display the list of foxes dynamically in an HTML element.
 */
 
-// Your code here
+const foxTracker = {
+    foxes: []
+}
+
+const foxList = document.querySelector('#foxList');
+
+const displayFoxes = () => {
+    foxList.innerHTML = '';
+    foxTracker.foxes.forEach(f => {
+        const foxItem = document.createElement('li');
+        const foxName = document.createElement('p');
+        const foxHabitat = document.createElement('p');
+        foxName.textContent = `Name: ${f.name} 🦊`;
+        foxHabitat.textContent = `Habitat: ${f.habitat}`;
+        foxItem.append(foxName, foxHabitat);
+        foxList.appendChild(foxItem);
+    })
+}
+
+displayFoxes();
+
+document.querySelector('#addFoxBtn').addEventListener('click', () => {
+    const foxName = document.querySelector('#foxName').value;
+    const foxHabitat = document.querySelector('#foxHabitat').value;
+    if (!foxName || !foxHabitat) {
+        document.querySelector('#foxError').textContent = 'Invalid values';
+        return;
+    }
+    const newFox = {
+        name: foxName,
+        habitat: foxHabitat
+    }
+    foxTracker.foxes.push(newFox);
+    document.querySelector('#foxError').textContent = '';
+    document.querySelector('#foxName').value = '';
+    document.querySelector('#foxHabitat').value = '';
+    displayFoxes();
+})

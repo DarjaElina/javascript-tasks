@@ -21,8 +21,12 @@
     </div>
     <div class="container">
         <h2>Product</h2>
-        <input type="number" placeholder="Enter a quantity" id="quantityInput">
-        <button id="calculateTotal">Calculate total</button>
+        <p>Name: <span id="productName"></span></p>
+        <p>Price: <span id="productPrice"></span></p>
+        <div class="form">
+            <input type="number" placeholder="Enter a quantity" id="quantityInput">
+            <button id="calculateTotal">Calculate total</button>
+        </div>
         <p>Total price is: <span id="displayPrice"></span></p>
     </div>
     <div class="container">
@@ -32,8 +36,8 @@
         <div class="form">
             <input id="taskTitle" type="text" placeholder="Title">
             <input id="taskDescription" type="text" placeholder="Description">
-            <div>
-                <label for="isCompleted">Task completed</label>
+            <div class="checkboxWrapper">
+                <label for="isCompleted">Completed</label>
                 <input id="isCompleted" type="checkbox">
             </div>
             <button id="addTask">Add task</button>
@@ -82,6 +86,45 @@
     <div class="container">
         <h2>Posts</h2>
         <ul id="posts"></ul>
+    </div>
+    <div class="container">
+        <h2>Employee</h2>
+        <p id="employeeError"></p>
+        <div class="form">
+            <p>Employee name: <span id="employeeName"></span></p>
+            <p>Employee position: <span id="employeePosition"></span></p>
+            <p>Employee salary: <span id="employeeSalary"></span></p>
+            <input id="percentInput" type="number" placeholder="Enter percent">
+            <button id="increaseSalaryBtn">Increase salary</button>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Timer</h2>
+        <p>Please see the JS file and uncomment the setInterval part is you'd like to test the timer :)</p>
+        <p>Timer: <span id="timer"></span></p>
+    </div>
+    <div class="container">
+        <h2>Library</h2>
+        <p id="libraryError"></p>
+        <p>My Books</p>
+        <ul id="bookList"></ul>
+        <div class="form">
+            <input type="text" placeholder="Book title" id="bookTitle">
+            <input type="text" placeholder="Book author" id="bookAuthor">
+            <input type="number" placeholder="Page amount" id="pageAmount">
+            <button id="addBookBtn">Add book</button>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Fox Tracker</h2>
+        <p id="foxError"></p>
+        <p>My foxes 🦊</p>
+        <ul id="foxList"></ul>
+        <div class="form">
+            <input type="text" placeholder="Fox name" id="foxName">
+            <input type="text" placeholder="Habitat" id="foxHabitat">
+            <button id="addFoxBtn">Add fox</button>
+        </div>
     </div>
     <script type="module" src="objects_03.js"></script>
 </body>
