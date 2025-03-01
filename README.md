@@ -23,3 +23,6 @@ This repo contains solutions for JavaScript course exercises.
 - **week_05:**
     - [x] arrays
     - [x] pancake_maker2
+- **week_05:**
+    - [x] little_zoo
+    - [x] objects
