@@ -23,6 +23,9 @@ This repo contains solutions for JavaScript course exercises.
 - **week_05:**
     - [x] arrays
     - [x] pancake_maker2
-- **week_05:**
+- **week_06:**
     - [x] little_zoo
     - [x] objects
+- **week_07:**
+    - [x] local_storage
+    - [x] JSON
