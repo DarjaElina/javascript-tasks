@@ -56,15 +56,15 @@ const createRemoveOrderBtn = (parentDiv) => {
 
 const updateOrders = (orders) => {
     localStorage.setItem('orders', JSON.stringify(orders));
-    displayOrders(orders);
+    displayOrders(orders, "Looks like you've completed all orders for the current moment 😃");
 }
 
 
-const displayOrders = (orders) => {
+const displayOrders = (orders, message) => {
     orderList.textContent = '';
 
     if (orders.length === 0)
-        orderList.textContent = "Looks like you've completed all orders for the current moment 😃";
+        orderList.textContent = message;
 
    
 
@@ -98,18 +98,18 @@ const searchOrder = () => {
     const searchText = document.querySelector('#searchOrder').value;
     const filteredOrders = orders.filter(o => o.id.toLowerCase().includes(searchText));
 
-    displayOrders(filteredOrders);
+    displayOrders(filteredOrders, "Sorry, we couldn't find any orders with this id :(");
 }
 
 const sortOrders = () => {
     const orders = JSON.parse(localStorage.getItem('orders')) || [];
     orders.sort((order1, order2) => order2.status.localeCompare(order1.status));
 
-    displayOrders(orders);
+    displayOrders(orders, "Looks like you've completed all orders for the current moment 😃");
 }
 
 document.querySelector('#searchOrder').addEventListener('input', searchOrder);
 
 document.querySelector('#sortOrders').addEventListener('click', sortOrders);
 
-displayOrders(orders);
+displayOrders(orders, "Looks like you've completed all orders for the current moment 😃");
