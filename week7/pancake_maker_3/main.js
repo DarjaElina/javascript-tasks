@@ -1,10 +1,11 @@
-const pancakeType = document.querySelector('#type');
-const toppings = document.querySelectorAll('.topping');
-const extras = document.querySelectorAll('.extra');
+import { createParagraphs } from './utils.js';
+
+const pancakeTypeInput = document.querySelector('#type');
 const totalPriceDisplay = document.querySelector('#totalPriceDisplay');
 const totalPriceBanner = document.querySelector('#totalPrice');
-const summaryText = document.querySelector('#summaryText');
-const nameInput = document.querySelector('#customerName')
+const nameInput = document.querySelector('#customerName');
+const errorText = document.querySelector('#errorText');
+const userMessage = document.querySelector('#userMessage');
 
 const closeModal = () => {
     document.querySelector('.modal').classList.add('hidden');
@@ -13,9 +14,14 @@ const openModal = () => {
     document.querySelector('.modal').classList.remove('hidden');
 }
 
-const changeHandler = (event) => {
+const displayInputError = () => {
+    errorText.classList.remove('hidden');
+    errorText.textContent = 'Please enter your name.';
+}
+
+const changeHandler = () => {
     const basePrice = parseFloat(
-        document.querySelector('#type').selectedOptions[0].dataset.price
+        pancakeTypeInput.selectedOptions[0].dataset.price
     )
 
     const toppingsTotal = [...document.querySelectorAll('.topping:checked')]
@@ -37,36 +43,26 @@ const changeHandler = (event) => {
 const orderSummary = document.createElement('div');
 
 const showOrderDetails = () => {
-    orderSummary.innerHTML = '';
+    orderSummary.textContent = '';
 
-    const customerName = nameInput.value;
-    const pancakeType = document.querySelector('#type').value;
-    const toppings = [...document.querySelectorAll('.topping:checked')].map(t => t.value)
-    const extras = [...document.querySelectorAll('.extra:checked')].map(t => t.value)
-    const deliveryMethod = document.querySelector('.delivery:checked').value;
+    const order = {
+        customerName: nameInput.value,
+        pancakeType: pancakeTypeInput.value,
+        toppings: [...document.querySelectorAll('.topping:checked')].map(t => t.value).join(', '),
+        extras: [...document.querySelectorAll('.extra:checked')].map(t => t.value).join(', '),
+        deliveryMethod: document.querySelector('.delivery:checked').value,
+        totalPrice: parseFloat(totalPriceDisplay.textContent)
+    }
 
-    if (!customerName) {
-        document.querySelector('#errorText').classList.remove('hidden');
-        document.querySelector('#errorText').textContent = 'Please enter your name.';
+    if (!nameInput.value.trim()) {
+        displayInputError();
         return;
     }
 
-    const customerNameDisplay = document.createElement('p');
-    const pancakeTypeDisplay = document.createElement('p');
-    const toppingsDisplay = document.createElement('p');
-    const extrasDisplay = document.createElement('p');
-    const deliveryMethodDisplay = document.createElement('p');
+    createParagraphs(['customerName', 'pancakeType', 'toppings', 'extras', 'deliveryMethod', 'totalPrice'], order, orderSummary);
     
     document.querySelector('#confirmOrder').classList.remove('hidden');
-    orderSummary.append(customerNameDisplay, pancakeTypeDisplay, toppingsDisplay, extrasDisplay, deliveryMethodDisplay);
-
     document.querySelector('#orderSummaryContent').insertBefore(orderSummary, document.querySelector('#confirmOrder'));
-
-    customerNameDisplay.textContent = `Customer name: ${customerName}`;
-    toppingsDisplay.textContent = `Toppings: ${toppings.length > 0 ? toppings : 'Not selected'}`;
-    pancakeTypeDisplay.textContent = `Pancake type: ${pancakeType}`;
-    extrasDisplay.textContent = `Extras: ${extras.length > 0 ? extras : 'Not selected'}`;
-    deliveryMethodDisplay.textContent = `Delivery method: ${deliveryMethod}`;
 
     document.querySelector('#errorText').classList.add('hidden');
     openModal();
@@ -85,18 +81,18 @@ class Order {
         this.status = status;
     }
 }
+
 const confirmOrder = () => {
     const id = Date.now().toString();
     const customerName = nameInput.value;
-    const pancakeType = document.querySelector('#type').value;
-    const toppings = [...document.querySelectorAll('.topping:checked')].map(t => t.value)
-    const extras = [...document.querySelectorAll('.extra:checked')].map(t => t.value)
+    const pancakeType = pancakeTypeInput.value;
+    const toppings = [...document.querySelectorAll('.topping:checked')].map(t => t.value).join(', ')
+    const extras = [...document.querySelectorAll('.extra:checked')].map(t => t.value).join(', ')
     const deliveryMethod = document.querySelector('.delivery:checked').value;
-    const totalPrice = parseFloat(document.querySelector('#totalPriceDisplay').textContent);
+    const totalPrice = parseFloat(totalPriceDisplay.textContent);
 
     if (!customerName) {
-        document.querySelector('#errorText').classList.remove = 'hidden';
-        document.querySelector('#errorText').textContent = 'Please enter your name.';
+        displayInputError();
         return;
     }
 
@@ -108,19 +104,17 @@ const confirmOrder = () => {
 
     localStorage.setItem('orders', JSON.stringify(orders));
 
-
     orderSummary.textContent = '';
     document.querySelector('#errorText').classList.add('hidden');
-    document.querySelector('#userMessage').classList.remove('hidden');
     document.querySelector('#confirmOrder').classList.add('hidden');
-    document.querySelector('#userMessage').textContent = 'Your order has been successfully completed! 🎉 This window will close in a few seconds.';
-    
+    userMessage.classList.remove('hidden');
+    userMessage.textContent = 'Your order has been successfully completed! 🎉 This window will close in a few seconds.';
     nameInput.value = '';
+
     setTimeout(() => {
         document.querySelector('#userMessage').classList.add('hidden');
         closeModal();
-    }, 5000)
-
+    }, 4000)
 }
 
 document.querySelector('#seeOrder').addEventListener('click', showOrderDetails);
