@@ -1,4 +1,4 @@
-const orders = JSON.parse(localStorage.getItem('orders')) ? JSON.parse(localStorage.getItem('orders')) : [];
+const orders = JSON.parse(localStorage.getItem('orders')) || [];
 const orderList = document.querySelector('#orderList');
 
 const createDropdown = (currentSelected) => {
@@ -19,24 +19,28 @@ const createDropdown = (currentSelected) => {
 
 const styleDropdown = (dropdown) => {
     dropdown.style.display = 'flex';
-    dropdown.style.justifyContent
-    dropdown.style.gap = '2rem';
-    dropdown.style.padding = '0.5rem';
+    dropdown.style.justifyContent = 'center';
+    dropdown.style.alignItems = 'center';
+    dropdown.style.gap = '1.5rem';
+    dropdown.style.padding = '0.5rem 1rem';
+    dropdown.style.borderRadius = '0.5rem';
+    dropdown.style.width = '100%';
     switch (dropdown.childNodes[1].value) {
         case 'waiting':
-            dropdown.style.border = '2px solid orange';
+            dropdown.style.backgroundColor = '#FFC107';
             return;
         case 'ready':
-            dropdown.style.border = '2px solid blue';
+            dropdown.style.backgroundColor = '#A2D2FF';
             return;
         case 'delivered':
-            dropdown.style.border = '2px solid green';
+            dropdown.style.backgroundColor = '#B8E0D6';
             return;
     }
 }
 
 const createRemoveOrderBtn = (parentDiv) => {
     const btn = document.createElement('button');
+    btn.style.margin = '1rem';
     btn.textContent = 'Remove order';
     parentDiv.appendChild(btn);
     return btn;
@@ -46,7 +50,7 @@ const createRemoveOrderBtn = (parentDiv) => {
 const displayOrders = (orders) => {
     orderList.innerHTML = '';
     if (orders.length === 0)
-        orderList.textContent = 'Looking good! You have no open orders!';
+        orderList.textContent = "Looks like you've completed all orders for the current moment 😃";
     orders.forEach((order, id) => {
         const orderItem = document.createElement('li');
         const customerName = document.createElement('p');
@@ -57,24 +61,17 @@ const displayOrders = (orders) => {
         const totalPrice = document.createElement('p');
         const statusDiv = document.createElement('div');
         const status = document.createElement('p');
+        status.style.border = 'none';
         const statusDropdown = createDropdown(order.status);
         statusDiv.append(status, statusDropdown);
         styleDropdown(statusDiv);
 
-        if (order.status === 'delivered') {
-            const btn = createRemoveOrderBtn(orderItem);
-            btn.addEventListener('click', () => {
-                const updatedOrders = orders.filter(o => o.id !== order.id)
-                localStorage.setItem('orders', JSON.stringify(updatedOrders));
-                displayOrders(updatedOrders);
-            })
-        }
+        
         
 
 
         statusDropdown.addEventListener('change', () => {
-            order.status = statusDropdown.value;
-            const updatedOrders = orders.map(o => o.id === id ? {...order, status: statusDropdown.value} : o)
+            const updatedOrders = orders.map(o => o.id === order.id ? {...order, status: statusDropdown.value} : o);
             localStorage.setItem('orders', JSON.stringify(updatedOrders));
             displayOrders(updatedOrders);
         });
@@ -88,11 +85,22 @@ const displayOrders = (orders) => {
         status.textContent = `Status: `;
 
         orderItem.append(customerName, pancakeType, toppings, extras, deliveryMethod, totalPrice, statusDiv);
+
+        if (order.status === 'delivered') {
+            const btn = createRemoveOrderBtn(orderItem);
+            btn.addEventListener('click', () => {
+                const updatedOrders = orders.filter(o => o.id !== order.id)
+                localStorage.setItem('orders', JSON.stringify(updatedOrders));
+                displayOrders(updatedOrders);
+            })
+        }
+
         orderList.appendChild(orderItem);
     })
 }
 
 const searchOrder = () => {
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
     const searchText = document.querySelector('#searchOrder').value;
     const filteredOrders = orders.filter(o => o.id.toLowerCase().includes(searchText));
 
@@ -100,7 +108,8 @@ const searchOrder = () => {
 }
 
 const sortOrders = () => {
-    console.log(orders.sort((order1, order2) => order2.status.localeCompare(order1.status)))
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    orders.sort((order1, order2) => order2.status.localeCompare(order1.status));
     displayOrders(orders);
 }
 
