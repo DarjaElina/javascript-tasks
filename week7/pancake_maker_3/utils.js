@@ -11,10 +11,10 @@ export const createParagraphs = (keysArray, order, parentDiv) => {
                 paragraph.textContent = `Pancake type: ${order.pancakeType}`;
                 return;
             case 'toppings':
-                paragraph.textContent = `Toppings: ${order.toppings.length > 0 ? order.toppings : 'Not selected'}`;
+                paragraph.textContent = `Toppings: ${order.toppings.length > 0 ? order.toppings.join(', ') : 'Not selected'}`;
                 return;
             case 'extras':
-                paragraph.textContent = `Extras: ${order.extras.length > 0 ? order.extras : 'Not selected'}`;
+                paragraph.textContent = `Extras: ${order.extras.length > 0 ? order.extras.join(', ') : 'Not selected'}`;
                 return;
             case 'deliveryMethod':
                 paragraph.textContent = `Delivery method: ${order.deliveryMethod}`;
@@ -26,4 +26,19 @@ export const createParagraphs = (keysArray, order, parentDiv) => {
                 paragraph.textContent = '';
         }
     })
+};
+
+
+
+export class Order {
+    constructor(id, customerName, pancakeType, toppings, extras, deliveryMethod, totalPrice, status = 'waiting') {
+        this.id = id;
+        this.customerName = customerName;
+        this.pancakeType = pancakeType;
+        this.toppings = toppings;
+        this.extras = extras;
+        this.deliveryMethod = deliveryMethod;
+        this.totalPrice = totalPrice;
+        this.status = status;
+    }
 };

@@ -5,19 +5,16 @@ const orderList = document.querySelector('#orderList');
 
 const createDropdown = (currentSelected) => {
     const options = ['waiting', 'ready', 'delivered'];
-    const selected = options.find(o => o === currentSelected);
     const select = document.createElement('select');
 
     for (const option of options) {
         const optionNode = document.createElement('option');
-        optionNode.setAttribute('value', option);
-
-        let optionText = document.createTextNode(`${option.charAt(0).toUpperCase()}${option.slice(1)}`);
-        optionNode.appendChild(optionText);
+        optionNode.value = option;
+        optionNode.textContent = `${option.charAt(0).toUpperCase()}${option.slice(1)}`;
         select.appendChild(optionNode);
     }
 
-    select.value = selected;
+    select.value = currentSelected;
     return select;
 }
 
@@ -31,26 +28,17 @@ const createDropdownWrapper = (label, dropdown, parentDiv) => {
 }
 
 const styleDropdownWrapper = (dropdown) => {
-    switch (dropdown.childNodes[1].value) {
-        case 'waiting':
-            dropdown.style.backgroundColor = '#FFC107';
-            return;
-        case 'ready':
-            dropdown.style.backgroundColor = '#A2D2FF';
-            return;
-        case 'delivered':
-            dropdown.style.backgroundColor = '#B8E0D6';
-            return;
-        default:
-            dropdown.style.backgroundColor = '#FFF0F3';
+    const colors = {
+        waiting: '#FFC107',
+        ready: '#A2D2FF',
+        delivered: '#B8E0D6'
     }
+    dropdown.style.backgroundColor = colors[dropdown.childNodes[1].value] || '#FFF0F3';
 }
 
-const createRemoveOrderBtn = (parentDiv) => {
+const createBtn = (text) => {
     const btn = document.createElement('button');
-    btn.style.margin = '1rem';
-    btn.textContent = 'Remove order';
-    parentDiv.appendChild(btn);
+    btn.textContent = text;
     return btn;
 }
 
@@ -59,14 +47,11 @@ const updateOrders = (orders) => {
     displayOrders(orders, "Looks like you've completed all orders for the current moment 😃");
 }
 
-
 const displayOrders = (orders, message) => {
     orderList.textContent = '';
 
     if (orders.length === 0)
         orderList.textContent = message;
-
-   
 
     orders.forEach((order) => {
         const orderItem = document.createElement('li');
@@ -82,7 +67,8 @@ const displayOrders = (orders, message) => {
         });
 
         if (order.status === 'delivered') {
-            const btn = createRemoveOrderBtn(orderItem);
+            const btn = createBtn('Remove order');
+            orderItem.appendChild(btn);
             btn.addEventListener('click', () => {
                 const updatedOrders = orders.filter(o => o.id !== order.id)
                 updateOrders(updatedOrders);
@@ -96,7 +82,7 @@ const displayOrders = (orders, message) => {
 const searchOrder = () => {
     const orders = JSON.parse(localStorage.getItem('orders')) || [];
     const searchText = document.querySelector('#searchOrder').value;
-    const filteredOrders = orders.filter(o => o.id.toLowerCase().includes(searchText));
+    const filteredOrders = orders.filter(o => o.id.toLowerCase().includes(searchText.toLowerCase()));
 
     displayOrders(filteredOrders, "Sorry, we couldn't find any orders with this id :(");
 }

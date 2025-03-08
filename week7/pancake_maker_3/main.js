@@ -1,4 +1,4 @@
-import { createParagraphs } from './utils.js';
+import { createParagraphs, Order } from './utils.js';
 
 const pancakeTypeInput = document.querySelector('#type');
 const totalPriceDisplay = document.querySelector('#totalPriceDisplay');
@@ -6,6 +6,7 @@ const totalPriceBanner = document.querySelector('#totalPrice');
 const nameInput = document.querySelector('#customerName');
 const errorText = document.querySelector('#errorText');
 const userMessage = document.querySelector('#userMessage');
+const confirmOrderBtn = document.querySelector('#confirmOrder');
 
 const closeModal = () => {
     document.querySelector('.modal').classList.add('hidden');
@@ -48,8 +49,8 @@ const showOrderDetails = () => {
     const order = {
         customerName: nameInput.value,
         pancakeType: pancakeTypeInput.value,
-        toppings: [...document.querySelectorAll('.topping:checked')].map(t => t.value).join(', '),
-        extras: [...document.querySelectorAll('.extra:checked')].map(t => t.value).join(', '),
+        toppings: [...document.querySelectorAll('.topping:checked')].map(t => t.value),
+        extras: [...document.querySelectorAll('.extra:checked')].map(t => t.value),
         deliveryMethod: document.querySelector('.delivery:checked').value,
         totalPrice: parseFloat(totalPriceDisplay.textContent)
     }
@@ -61,33 +62,19 @@ const showOrderDetails = () => {
 
     createParagraphs(['customerName', 'pancakeType', 'toppings', 'extras', 'deliveryMethod', 'totalPrice'], order, orderSummary);
     
-    document.querySelector('#confirmOrder').classList.remove('hidden');
-    document.querySelector('#orderSummaryContent').insertBefore(orderSummary, document.querySelector('#confirmOrder'));
+    confirmOrderBtn.classList.remove('hidden');
+    document.querySelector('#orderSummaryContent').insertBefore(orderSummary, confirmOrderBtn);
 
-    document.querySelector('#errorText').classList.add('hidden');
+    errorMessage.classList.add('hidden');
     openModal();
-}
-
-
-class Order {
-    constructor(id, customerName, pancakeType, toppings, extras, deliveryMethod, totalPrice, status = 'waiting') {
-        this.id = id;
-        this.customerName = customerName;
-        this.pancakeType = pancakeType;
-        this.toppings = toppings;
-        this.extras = extras;
-        this.deliveryMethod = deliveryMethod;
-        this.totalPrice = totalPrice;
-        this.status = status;
-    }
 }
 
 const confirmOrder = () => {
     const id = Date.now().toString();
     const customerName = nameInput.value;
     const pancakeType = pancakeTypeInput.value;
-    const toppings = [...document.querySelectorAll('.topping:checked')].map(t => t.value).join(', ')
-    const extras = [...document.querySelectorAll('.extra:checked')].map(t => t.value).join(', ')
+    const toppings = [...document.querySelectorAll('.topping:checked')].map(t => t.value);
+    const extras = [...document.querySelectorAll('.extra:checked')].map(t => t.value);
     const deliveryMethod = document.querySelector('.delivery:checked').value;
     const totalPrice = parseFloat(totalPriceDisplay.textContent);
 
@@ -105,8 +92,8 @@ const confirmOrder = () => {
     localStorage.setItem('orders', JSON.stringify(orders));
 
     orderSummary.textContent = '';
-    document.querySelector('#errorText').classList.add('hidden');
-    document.querySelector('#confirmOrder').classList.add('hidden');
+    errorMessage.classList.add('hidden');
+    confirmOrderBtn.classList.add('hidden');
     userMessage.classList.remove('hidden');
     userMessage.textContent = 'Your order has been successfully completed! 🎉 This window will close in a few seconds.';
     nameInput.value = '';
@@ -119,5 +106,5 @@ const confirmOrder = () => {
 
 document.querySelector('#seeOrder').addEventListener('click', showOrderDetails);
 document.querySelector('#pancakeForm').addEventListener('change', changeHandler);
-document.querySelector('#confirmOrder').addEventListener('click', confirmOrder);
 document.querySelector('#closeModal').addEventListener('click', closeModal);
+confirmOrderBtn.addEventListener('click', confirmOrder);
