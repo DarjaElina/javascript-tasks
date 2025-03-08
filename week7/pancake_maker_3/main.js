@@ -4,7 +4,7 @@ const pancakeTypeInput = document.querySelector('#type');
 const totalPriceDisplay = document.querySelector('#totalPriceDisplay');
 const totalPriceBanner = document.querySelector('#totalPrice');
 const nameInput = document.querySelector('#customerName');
-const errorText = document.querySelector('#errorText');
+const errorMessage = document.querySelector('#errorText');
 const userMessage = document.querySelector('#userMessage');
 const confirmOrderBtn = document.querySelector('#confirmOrder');
 
