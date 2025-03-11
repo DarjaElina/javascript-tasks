@@ -69,6 +69,21 @@ const showOrderDetails = () => {
     openModal();
 }
 
+const resetCheckboxes = (checkboxes) => {
+    for (const checkbox of checkboxes) {
+        checkbox.checked = false;
+    }
+}
+
+const resetFormAndPrice = () => {
+    resetCheckboxes(document.querySelectorAll('.topping'));
+    resetCheckboxes(document.querySelectorAll('.extra'));
+    pancakeTypeInput.value = 'Classic';
+    document.querySelector('.delivery').checked = 'Eat in';
+    totalPriceDisplay.textContent = '5 €';
+    totalPriceBanner.textContent = '5 €';
+};
+
 const confirmOrder = () => {
     const id = Date.now().toString();
     const customerName = nameInput.value;
@@ -98,6 +113,7 @@ const confirmOrder = () => {
     userMessage.textContent = 'Your order has been successfully completed! 🎉 This window will close in a few seconds.';
     nameInput.value = '';
 
+    resetFormAndPrice();
     setTimeout(() => {
         document.querySelector('#userMessage').classList.add('hidden');
         closeModal();
