@@ -152,14 +152,15 @@ button {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-start;
   gap: 5rem;
+
 }
 
 .image-container {
   position: relative;
-  max-width: 50%;
+  max-width: 45%;
   border-radius: 10px;
 }
 
@@ -224,10 +225,11 @@ nav .container {
 
 .ordersToolbar {
   display: flex;
-  /* gap: 2rem; */
   justify-content: space-between;
   width: 100%;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
 } 
 
 .ordersToolbar input {
@@ -316,8 +318,74 @@ a:hover {
   gap: 1rem;
 }
 
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .image-container {
+    max-width: 80%;
+  }
+
+  #pancakeForm {
+    width: 80%;
+  }
+
+  .ordersToolbar input {
+    width: 80%;
+  }
+}
+
 @media (max-width: 768px) {
-  #orderList {
+  body {
+    padding: 1rem;
+  }
+
+  .ordersToolbar {
     justify-content: center;
+  }
+  
+  .ordersToolbar input {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  
+
+  .container {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  .image-container {
+    max-width: 100%;
+  }
+
+  #pancakeForm {
+    width: 100%;
+    padding: 1.5rem;
+    background-color: none;
+  }
+
+  .price-banner {
+    width: 80px;
+    height: 80px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  a {
+    font-size: 1rem;
+  }
+
+  .image-container img {
+    border-radius: 5px;
+  }
+
+  #pancakeForm {
+    padding: 1rem;
   }
 }
